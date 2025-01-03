@@ -1,5 +1,6 @@
 import { MdOutlineAddRoad } from "react-icons/md";
 import useClippingContext from "../hooks/useClippingContext";
+import NewSlidersInconControlbar from "./NewSlidersInconControlbar";
 
 function Controlbar() {
   const clippingContext = useClippingContext();
@@ -17,21 +18,26 @@ function Controlbar() {
     return acc;
   }, 0);
 
+  function secondsToTimeFormat(seconds: number) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+
+    return `${hours.toString().padStart(2, "0")} hours ${minutes
+      .toString()
+      .padStart(2, "0")} mins ${remainingSeconds
+      .toString()
+      .padStart(2, "0")} secs`;
+  }
+
   return (
     <div className="grid grid-cols-[1fr_auto_1fr] gap-2 bg-gray-100 py-2 items-center px-3">
       {/* draggable */}
-      <span
-        className="px-2 py-1 bg-gray-300 rounded-full cursor-move hover:bg-gray-400 w-fit"
-        draggable="true"
-        onDragStart={(e) => {
-          // TODO: keep it in a constant
-          e.dataTransfer.setData("text/plain", "add-slider");
-        }}
-      >
-        <MdOutlineAddRoad />
-      </span>
+      <NewSlidersInconControlbar />
       <p>
-        <span className="px-2">02 Mins 30 secs {sumOfSeconds}</span>
+        <span className="px-2">
+          {secondsToTimeFormat(Math.floor(sumOfSeconds / 5))}
+        </span>
         <span className="px-2">
           {(sliders.length / 2).toString().padStart(2, "0")} clips
         </span>

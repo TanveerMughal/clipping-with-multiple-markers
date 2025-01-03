@@ -1,3 +1,5 @@
+export const multiplier = 5;
+
 function getDropPoint(event: React.MouseEvent<HTMLDivElement>) {
   const leftOffsetX = event.currentTarget.getBoundingClientRect().left;
   const clientX = event.clientX;
@@ -37,9 +39,10 @@ function isInSafeRangeForNewSlider({
 
   if (dropPoint < sliders[0]) {
     // TODO: replace 20 with a multiplier constant i.e 4 sec x 5 multiplier
-    const isAtleastFourSecondsAheadOfZero = dropPoint >= 20;
+    const isAtleastFourSecondsAheadOfZero = dropPoint >= withMultiplier(4);
     // TODO: replace 15 with a multiplier constant i.e 3sec x 5 multiplier
-    const isAtleastThreeSecondsBeforeFirstSlider = sliders[0] - dropPoint >= 15;
+    const isAtleastThreeSecondsBeforeFirstSlider =
+      sliders[0] - dropPoint >= withMultiplier(3);
 
     return (
       isAtleastFourSecondsAheadOfZero && isAtleastThreeSecondsBeforeFirstSlider
@@ -51,10 +54,10 @@ function isInSafeRangeForNewSlider({
   if (dropPoint > sliders[sliders.length - 1]) {
     // TODO: replace 15 with a multiplier constant i.e 3 sec x 5 multiplier
     const isAtleastThreeSecondsBeforeTotalDuration =
-      totalDuration * 5 - dropPoint >= 15;
+      withMultiplier(totalDuration) - dropPoint >= withMultiplier(3);
     // TODO: replace 20 with a multiplier constant i.e 4sec x 5 multiplier
     const isAtleastFourSecondsAheadOfLastSlider =
-      dropPoint - sliders[sliders.length - 1] >= 20;
+      dropPoint - sliders[sliders.length - 1] >= withMultiplier(4);
 
     return (
       isAtleastThreeSecondsBeforeTotalDuration &&
@@ -72,13 +75,14 @@ function isInSafeRangeForNewSlider({
   // because findIndex returns -1 if the condition is not met for any element
   if (dropPointNextSliderIndex === -1) return false;
 
+  // because first and last slider are not going to be detected in the above findIndex
   // TODO: replace 20 with a multiplier constant i.e 4 sec x 5 multiplier
   const isAtleastFourSecondsAheadOfPreviousSlider =
-    dropPoint - sliders[dropPointNextSliderIndex - 1] >= 20;
+    dropPoint - sliders[dropPointNextSliderIndex - 1] >= withMultiplier(4);
 
   // TODO: replace 15 with a multiplier constant i.e  3sec x 5 multiplier
   const isAtleastThreeSecondsBeforeNextSlider =
-    sliders[dropPointNextSliderIndex] - dropPoint >= 15;
+    sliders[dropPointNextSliderIndex] - dropPoint >= withMultiplier(3);
 
   return (
     isAtleastFourSecondsAheadOfPreviousSlider &&
@@ -108,9 +112,11 @@ function updateSliderPosition({
     // should not be greater than its closing slider - 5 and should not be less than its previous slider
 
     // TODO: replace 25 with a multiplier constant i.e 5 sec x 5 multiplier
-    const closingSliderSafeRange = sliders[selectedSliderIndex + 1] - 25;
+    const closingSliderSafeRange =
+      sliders[selectedSliderIndex + 1] - withMultiplier(5);
     // TODO: replace 5 with a multiplier constant i.e 1 sec x 5 multiplier
-    const previousSliderSafeRange = sliders[selectedSliderIndex - 1] + 5;
+    const previousSliderSafeRange =
+      sliders[selectedSliderIndex - 1] + withMultiplier(1);
 
     if (newSliderPosition > closingSliderSafeRange) {
       newSliders[selectedSliderIndex] = closingSliderSafeRange;
@@ -120,9 +126,11 @@ function updateSliderPosition({
   } else {
     // should not be less than its opening slider + 5 and should not be greater than its next slider
     // TODO: replace 25 with a multiplier constant i.e 5 sec x 5 multiplier
-    const openingSliderSafeRange = sliders[selectedSliderIndex - 1] + 25;
+    const openingSliderSafeRange =
+      sliders[selectedSliderIndex - 1] + withMultiplier(5);
     // TODO: replace 5 with a multiplier constant i.e 1 sec x 5 multiplier
-    const nextSliderSafeRange = sliders[selectedSliderIndex + 1] - 5;
+    const nextSliderSafeRange =
+      sliders[selectedSliderIndex + 1] - withMultiplier(1);
 
     if (newSliderPosition < openingSliderSafeRange) {
       newSliders[selectedSliderIndex] = openingSliderSafeRange;
@@ -134,11 +142,25 @@ function updateSliderPosition({
   return newSliders;
 }
 
+function withMultiplier(value: number) {
+  return value * multiplier;
+}
+
+function withoutMultiplier(value: number) {
+  if (value < multiplier) {
+    alert;
+  }
+
+  return value / multiplier;
+}
+
 function useSliderFns() {
   return {
     updateSliderPosition,
     getDropPoint,
     isInSafeRangeForNewSlider,
+    withMultiplier,
+    withoutMultiplier,
   };
 }
 
