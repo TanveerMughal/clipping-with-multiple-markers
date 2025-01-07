@@ -3,4 +3,6 @@ declare module "global" {
     start: number;
     end: number;
   };
+
+  type ViewLevelType = "secs" | "mins" | "hours";
 }

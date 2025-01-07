@@ -11,6 +11,8 @@ function ContextProvider({
   setSliders,
   selectedSliderIndex,
   setSelectedSliderIndex,
+  viewLevel,
+  setViewLevel,
 }: ClippingContextType & { children: React.ReactNode }) {
   return (
     <ClippingContext.Provider
@@ -20,6 +22,8 @@ function ContextProvider({
         setSliders,
         selectedSliderIndex,
         setSelectedSliderIndex,
+        viewLevel,
+        setViewLevel,
       }}
     >
       {children}

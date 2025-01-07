@@ -4,13 +4,22 @@ import ClippingTimeline from "./components/HtmlTimeline/ClippingTimeline";
 import Controlbar from "./components/HtmlTimeline/Controlbar";
 import Legendbar from "./components/HtmlTimeline/Legendbar";
 import ContextProvider from "./components/HtmlTimeline/ContextProvider";
+import useSliderFns from "./components/hooks/useSliderFns";
+import { ViewLevelType } from "global";
 
 function App() {
-  const [duration, setDuration] = useState(1500);
-  const [sliders, setSliders] = useState<Array<number>>([100, 400, 560, 1000]);
+  const [duration, setDuration] = useState(86400);
+  const { withMultiplier } = useSliderFns();
+  const [sliders, setSliders] = useState<Array<number>>([
+    withMultiplier(60),
+    withMultiplier(120),
+    withMultiplier(180),
+    withMultiplier(240),
+  ]);
   const [selectedSliderIndex, setSelectedSliderIndex] = useState<number | null>(
     null
   );
+  const [viewLevel, setViewLevel] = useState<ViewLevelType>("secs");
 
   const mainContainerWidth =
     document.getElementById("main-container")?.offsetWidth;
@@ -38,6 +47,8 @@ function App() {
           setSliders={setSliders}
           selectedSliderIndex={selectedSliderIndex}
           setSelectedSliderIndex={setSelectedSliderIndex}
+          viewLevel={viewLevel}
+          setViewLevel={setViewLevel}
         >
           <Controlbar />
           <Legendbar

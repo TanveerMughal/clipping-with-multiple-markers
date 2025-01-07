@@ -1,6 +1,6 @@
-import { MdOutlineAddRoad } from "react-icons/md";
 import useClippingContext from "../hooks/useClippingContext";
 import NewSlidersInconControlbar from "./NewSlidersInconControlbar";
+import ZoomLevelControlButtonsControlbar from "./ZoomLevelControlButtonsControlbar";
 
 function Controlbar() {
   const clippingContext = useClippingContext();
@@ -42,19 +42,7 @@ function Controlbar() {
           {(sliders.length / 2).toString().padStart(2, "0")} clips
         </span>
       </p>
-      <div className="flex items-center justify-end gap-2 px-2 text-gray-600">
-        {["secs", "mins", "hours"].map((level) => {
-          return (
-            <button
-              key={level}
-              type="button"
-              className="px-2 bg-gray-300 rounded-full hover:bg-gray-400"
-            >
-              {level}
-            </button>
-          );
-        })}
-      </div>
+      <ZoomLevelControlButtonsControlbar />
     </div>
   );
 }

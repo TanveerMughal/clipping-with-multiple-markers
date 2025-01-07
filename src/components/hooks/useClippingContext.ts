@@ -6,6 +6,8 @@ export type ClippingContextType = {
   setSliders: React.Dispatch<React.SetStateAction<number[]>>;
   selectedSliderIndex: number | null;
   setSelectedSliderIndex: React.Dispatch<React.SetStateAction<number | null>>;
+  viewLevel: "secs" | "mins" | "hours";
+  setViewLevel: React.Dispatch<React.SetStateAction<"secs" | "mins" | "hours">>;
 };
 
 export const ClippingContext = createContext<ClippingContextType | null>(null);
