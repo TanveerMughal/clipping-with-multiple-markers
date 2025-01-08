@@ -8,7 +8,7 @@ import useSliderFns from "./components/hooks/useSliderFns";
 import { ViewLevelType } from "global";
 
 function App() {
-  const [duration, setDuration] = useState(86400);
+  const [duration, setDuration] = useState(10000);
   const { withMultiplier } = useSliderFns();
   const [sliders, setSliders] = useState<Array<number>>([
     withMultiplier(60),
@@ -27,7 +27,7 @@ function App() {
   useEffect(() => {
     const interval = setInterval(() => {
       setDuration((prev) => prev + 5);
-    }, 10000);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 
