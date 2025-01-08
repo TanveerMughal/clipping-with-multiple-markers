@@ -35,6 +35,13 @@ function isInSafeRangeForNewSlider({
 
   debugger;
 
+  // logic: if there is not slider, we return true if the drop point is between 0 and 100%
+  if (sliders.length === 0) {
+    if (dropPoint < 0 || dropPoint > withMultiplier(totalDuration))
+      return false;
+    return true;
+  }
+
   // logic: if the drop point is less than the first slider, we return true if difference between 0 and droppoint is atleast 4 seconds and difference between drop point and first slider is atleast 3 seconds
 
   if (dropPoint < sliders[0]) {

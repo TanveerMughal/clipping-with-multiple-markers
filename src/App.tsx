@@ -8,14 +8,9 @@ import useSliderFns from "./components/hooks/useSliderFns";
 import { ViewLevelType } from "global";
 
 function App() {
-  const [duration, setDuration] = useState(10000);
+  const [duration, setDuration] = useState(30);
   const { withMultiplier } = useSliderFns();
-  const [sliders, setSliders] = useState<Array<number>>([
-    withMultiplier(60),
-    withMultiplier(120),
-    withMultiplier(180),
-    withMultiplier(240),
-  ]);
+  const [sliders, setSliders] = useState<Array<number>>([]);
   const [selectedSliderIndex, setSelectedSliderIndex] = useState<number | null>(
     null
   );

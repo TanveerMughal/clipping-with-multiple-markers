@@ -51,6 +51,8 @@ function TimelineMainScrollableParent({
       onDrop={(e) => {
         e.preventDefault();
         setIsDraggedOver(false);
+
+        debugger;
         const data = e.dataTransfer.getData("text/plain");
         if (data === "add-slider") {
           const dropPoint = getDropPoint(e);
